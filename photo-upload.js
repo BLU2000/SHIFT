@@ -1,7 +1,7 @@
 /* Photos are decoded locally and embedded as portable JPEGs. */
 function mergeUploadedPhotos(incoming) {
   for (const photo of incoming) {
-    if (!photo?.uploaded || typeof photo.id !== 'string' || !/^photo-[a-f0-9]{64}$/.test(photo.id) || photos.some(p => p.id === photo.id)) continue;
+    if (!photo?.uploaded || deletedPhotoIds.has(photo.id) || typeof photo.id !== 'string' || !/^photo-[a-f0-9]{64}$/.test(photo.id) || photos.some(p => p.id === photo.id)) continue;
     if (typeof photo.name !== 'string' || typeof photo.src !== 'string' || !/^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(photo.src)) throw new Error('Invalid uploaded photo');
     photos.push({id: photo.id, name: photo.name, src: photo.src, uploaded: true, addedAt: photo.addedAt});
   }
@@ -35,7 +35,7 @@ async function addPhotos(files) {
       try {
         const photo = await prepareUploadedPhoto(file);
         if (!photo) { duplicates++; continue; }
-        photos.push(photo); added.push(photo);
+        deletedPhotoIds.delete(photo.id);photos.push(photo); added.push(photo);
       } catch (error) { errors.push(`${file.name}: ${error.message}`); }
     }
     if (added.length) {

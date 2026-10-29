@@ -1,0 +1,961 @@
+{
+  "source": "images/images all/New Photos",
+  "total": 204,
+  "locations": {
+    "IMG_4441-2": {
+      "lat": 48.150235,
+      "lng": 11.5673833,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4442-2": {
+      "lat": 48.1502883,
+      "lng": 11.5672717,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4443": {
+      "lat": 48.1505017,
+      "lng": 11.56666,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4444": {
+      "lat": 48.1505433,
+      "lng": 11.566535,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4445": {
+      "lat": 48.150505,
+      "lng": 11.5663783,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4446": {
+      "lat": 48.1505733,
+      "lng": 11.5660583,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4447": {
+      "lat": 48.1505967,
+      "lng": 11.5659067,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4448": {
+      "lat": 48.1506317,
+      "lng": 11.5657617,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4449": {
+      "lat": 48.1506317,
+      "lng": 11.5657617,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4450": {
+      "lat": 48.1506317,
+      "lng": 11.5657617,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4452": {
+      "lat": 48.1506317,
+      "lng": 11.5657617,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4453": {
+      "lat": 48.1506317,
+      "lng": 11.5657617,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4455": {
+      "lat": 48.1506317,
+      "lng": 11.5657617,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4456": {
+      "lat": 48.1506317,
+      "lng": 11.5657617,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4457": {
+      "lat": 48.1509217,
+      "lng": 11.5652033,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4458": {
+      "lat": 48.1510017,
+      "lng": 11.5649383,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4459": {
+      "lat": 48.1510017,
+      "lng": 11.5649383,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4460": {
+      "lat": 48.1510017,
+      "lng": 11.5649383,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4461": {
+      "lat": 48.1510017,
+      "lng": 11.5649383,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4462": {
+      "lat": 48.1510017,
+      "lng": 11.5649383,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4463": {
+      "lat": 48.1510017,
+      "lng": 11.5649383,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4464": {
+      "lat": 48.1510017,
+      "lng": 11.5649383,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4465": {
+      "lat": 48.1510017,
+      "lng": 11.5649383,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4466": {
+      "lat": 48.1513067,
+      "lng": 11.5638267,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4467": {
+      "lat": 48.15134,
+      "lng": 11.5637033,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4468": {
+      "lat": 48.1513517,
+      "lng": 11.5635667,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4469": {
+      "lat": 48.1513667,
+      "lng": 11.5634333,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4470": {
+      "lat": 48.15142,
+      "lng": 11.563145,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4471": {
+      "lat": 48.1514633,
+      "lng": 11.56299,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4472": {
+      "lat": 48.15149,
+      "lng": 11.56285,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4473": {
+      "lat": 48.1515433,
+      "lng": 11.5625583,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4474": {
+      "lat": 48.1515917,
+      "lng": 11.56243,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4475": {
+      "lat": 48.1517033,
+      "lng": 11.5621883,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4476": {
+      "lat": 48.1516833,
+      "lng": 11.5620533,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4477": {
+      "lat": 48.1517567,
+      "lng": 11.5619283,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4478": {
+      "lat": 48.1518167,
+      "lng": 11.5616383,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4479": {
+      "lat": 48.1518967,
+      "lng": 11.56153,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4480": {
+      "lat": 48.151955,
+      "lng": 11.561255,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4481": {
+      "lat": 48.1520317,
+      "lng": 11.56117,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4482": {
+      "lat": 48.1520533,
+      "lng": 11.560755,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4483": {
+      "lat": 48.152095,
+      "lng": 11.5606317,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4484": {
+      "lat": 48.15205,
+      "lng": 11.560765,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4485": {
+      "lat": 48.15205,
+      "lng": 11.5609,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4486": {
+      "lat": 48.1519517,
+      "lng": 11.561135,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4487": {
+      "lat": 48.1519517,
+      "lng": 11.561135,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4488": {
+      "lat": 48.1519433,
+      "lng": 11.561275,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4489": {
+      "lat": 48.1518783,
+      "lng": 11.5613733,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4490": {
+      "lat": 48.15184,
+      "lng": 11.5615,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4491": {
+      "lat": 48.1518067,
+      "lng": 11.5616317,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4492": {
+      "lat": 48.1517683,
+      "lng": 11.5617633,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4493": {
+      "lat": 48.1517333,
+      "lng": 11.5619,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4494": {
+      "lat": 48.1517333,
+      "lng": 11.5620333,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4495": {
+      "lat": 48.1515533,
+      "lng": 11.56255,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4496": {
+      "lat": 48.151535,
+      "lng": 11.562685,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4497": {
+      "lat": 48.1514467,
+      "lng": 11.5629433,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4498": {
+      "lat": 48.1514733,
+      "lng": 11.5630717,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4499": {
+      "lat": 48.1513667,
+      "lng": 11.5632933,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4500": {
+      "lat": 48.1513633,
+      "lng": 11.5634283,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4501": {
+      "lat": 48.151265,
+      "lng": 11.56367,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4502": {
+      "lat": 48.1519433,
+      "lng": 11.560185,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4503": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4504": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4505": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4506": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4507": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4508": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4509": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4510": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4511": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4512": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4513": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4514": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4515": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4516": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4517": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4518": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4519": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4520": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4521": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4522": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4523": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4524": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4525": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4526": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4527": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4528": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4529": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4530": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4531": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4532": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4533": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4534": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4535": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4536": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4537": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4538": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4539": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4540": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4541": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4542": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4543": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4544": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4545": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4546": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4547": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4548": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4549": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4550": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4551": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4552": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4553": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4554": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4555": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4556": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4557": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4558": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4559": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4560": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4561": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4562": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4563": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4564": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4565": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4566": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4567": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4568": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4569": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4570": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4571": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4572": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4573": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4574": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4575": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4576": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4577": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4578": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4579": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4580": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4581": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4582": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4583": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4584": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4585": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4586": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4587": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4588": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4589": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4590": {
+      "lat": 48.1518633,
+      "lng": 11.5601967,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4608": {
+      "lat": 48.1492417,
+      "lng": 11.5624117,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4609": {
+      "lat": 48.14951,
+      "lng": 11.5624217,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4610": {
+      "lat": 48.14933,
+      "lng": 11.5621317,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4611": {
+      "lat": 48.14933,
+      "lng": 11.5621317,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4612": {
+      "lat": 48.14933,
+      "lng": 11.5621317,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4613": {
+      "lat": 48.1498217,
+      "lng": 11.56183,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4614": {
+      "lat": 48.15012,
+      "lng": 11.5618933,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4615": {
+      "lat": 48.15012,
+      "lng": 11.5618933,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4616": {
+      "lat": 48.1503683,
+      "lng": 11.5615033,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4617": {
+      "lat": 48.1498183,
+      "lng": 11.5637117,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4618": {
+      "lat": 48.149895,
+      "lng": 11.5638117,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4619": {
+      "lat": 48.149895,
+      "lng": 11.5638117,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4620": {
+      "lat": 48.1498033,
+      "lng": 11.5642533,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4621": {
+      "lat": 48.1497883,
+      "lng": 11.564395,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4622": {
+      "lat": 48.1495667,
+      "lng": 11.5648167,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4623": {
+      "lat": 48.14951,
+      "lng": 11.5651,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4624": {
+      "lat": 48.1495133,
+      "lng": 11.565235,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4625": {
+      "lat": 48.149495,
+      "lng": 11.5653883,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4626": {
+      "lat": 48.149395,
+      "lng": 11.565635,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4627": {
+      "lat": 48.14943,
+      "lng": 11.5653617,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4628": {
+      "lat": 48.1495217,
+      "lng": 11.5651233,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4629": {
+      "lat": 48.1496967,
+      "lng": 11.5646383,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4630": {
+      "lat": 48.1497567,
+      "lng": 11.564535,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4631": {
+      "lat": 48.14983,
+      "lng": 11.5647167,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4632": {
+      "lat": 48.1498867,
+      "lng": 11.564825,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4633": {
+      "lat": 48.1500967,
+      "lng": 11.5651133,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4634": {
+      "lat": 48.1500967,
+      "lng": 11.5651133,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4635": {
+      "lat": 48.1500967,
+      "lng": 11.5651133,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4636": {
+      "lat": 48.1500967,
+      "lng": 11.5651133,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4637": {
+      "lat": 48.15065,
+      "lng": 11.5657133,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4638": {
+      "lat": 48.15065,
+      "lng": 11.5657133,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4641": {
+      "lat": 48.15065,
+      "lng": 11.5657133,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4642": {
+      "lat": 48.15065,
+      "lng": 11.5657133,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4643": {
+      "lat": 48.15065,
+      "lng": 11.5657133,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4644": {
+      "lat": 48.1491883,
+      "lng": 11.56605,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4645": {
+      "lat": 48.1489483,
+      "lng": 11.5659417,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4646": {
+      "lat": 48.1488683,
+      "lng": 11.5658167,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4647": {
+      "lat": 48.1486933,
+      "lng": 11.5656867,
+      "source": "Photo GPS metadata"
+    },
+    "IMG_4648": {
+      "lat": 48.148625,
+      "lng": 11.5656,
+      "source": "Photo GPS metadata"
+    }
+  },
+  "missing": {
+    "IMG_4591.jpg": "No EXIF GPS coordinates",
+    "IMG_4592.jpg": "No EXIF GPS coordinates",
+    "IMG_4593.jpg": "No EXIF GPS coordinates",
+    "IMG_4594.jpg": "No EXIF GPS coordinates",
+    "IMG_4595.jpg": "No EXIF GPS coordinates",
+    "IMG_4596.jpg": "No EXIF GPS coordinates",
+    "IMG_4597.jpg": "No EXIF GPS coordinates",
+    "IMG_4598.jpg": "No EXIF GPS coordinates",
+    "IMG_4599.jpg": "No EXIF GPS coordinates",
+    "IMG_4600.jpg": "No EXIF GPS coordinates",
+    "IMG_4601.jpg": "No EXIF GPS coordinates",
+    "IMG_4602.jpg": "No EXIF GPS coordinates",
+    "IMG_4603.jpg": "No EXIF GPS coordinates",
+    "IMG_4604.jpg": "No EXIF GPS coordinates",
+    "IMG_4605.jpg": "No EXIF GPS coordinates",
+    "IMG_4606.jpg": "No EXIF GPS coordinates",
+    "IMG_4607.jpg": "No EXIF GPS coordinates"
+  },
+  "errors": {}
+}

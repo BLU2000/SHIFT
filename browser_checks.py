@@ -9,7 +9,7 @@ data = {'version': 1, 'dataset': 'shift-browser-checks-' + uuid.uuid4().hex, 'ph
     {'id': 'test-1', 'name': 'Test one', 'src': 'images/browser/IMG_2708.jpg', 'location': {'lat': 48.1483833, 'lng': 11.56535}},
     {'id': 'test-2', 'name': 'Test two', 'src': 'images/browser/IMG_2710.jpg', 'location': {'lat': 48.15, 'lng': 11.57}}], 'records': {}, 'conflicts': []}
 html = (root / 'index.html').read_text(encoding='utf-8')
-html = html.replace('<head>', '<head><script>window.onerror=(message,source,line)=>{document.title="JS ERROR line "+line+": "+message;};</script>')
+html = html.replace('<head>', '<head><script>window.DISABLE_LIVE_OVERVIEW_FOR_TESTS=true;window.onerror=(message,source,line)=>{document.title="JS ERROR line "+line+": "+message;};</script>')
 html = re.sub(r'(<script id="collection-data" type="application/json">).*?(</script>)', lambda m: m[1] + json.dumps(data) + m[2], html, flags=re.S)
 checks = r'''
 <script>
@@ -18,6 +18,17 @@ const results=[];const assert=(v,label)=>{if(!v)throw Error(label);results.push(
 try{
 while(!document.querySelector('#next'))await new Promise(r=>setTimeout(r,20));
 assert(photos.length===2,'Collection loads');
+assert(!document.querySelector('#buildingTypeNumber'),'Manual category selector is removed from tagging');
+document.querySelector('#sortPhotos').click();assert(view==='sorting'&&sortPhotoId==='test-1','Sorting canvas opens with the first unsorted photo');
+await sortAssignPhoto('test-1','new');assert(records['test-1'].buildingType===1&&sortPhotoId==='test-2','New folder assigns a number and advances to next photo');
+showSortPreview(1);assert(document.querySelectorAll('[data-sort-select]').length===1,'Folder contents are visible during sorting');
+records['test-2']=blank();records['test-2'].completed=true;await sortAssignPhoto('test-2','1');
+assert(buildingTypeGroups()[0][1].length===2&&!sortPhotoId&&records['test-2'].completed,'Existing folder groups images without resetting facade completion');
+await undoSortAssignment();assert(!records['test-2'].buildingType&&sortPhotoId==='test-2','Undo restores previous category and queue position');
+await sortAssignPhoto('test-2','1');records['test-2'].completed=false;
+assert(nextBuildingType()===2,'Next category number increments automatically');current='test-1';view='entry';render();
+assert(fractions.join('|')==='0|¼|⅓|½|⅔|¾|1','Ratio choices include complementary thirds and quarters');
+assert(Math.abs(analysisValue({type:{windows:'⅔'}},analysisDimensions[0]).value-2/3)<1e-10&&analysisValue({type:{windows:'¾'}},analysisDimensions[0]).value===.75,'Charts interpret new ratio values correctly');
 assert(rec().location.lat==='48.1483833'&&document.querySelector('#lat').value==='48.1483833','Photo GPS prefills location');
 rec().location.lat='48.2';assert(rec().location.lat==='48.2','Manual coordinates override photo GPS');
 rec().location.lat='';assert(rec().location.lat==='','Explicitly cleared coordinate stays empty');
@@ -32,6 +43,10 @@ document.querySelector('#next').click(); assert(step===1&&document.querySelector
 for(const d of contextFields){const el=[...document.querySelectorAll('input[data-key="'+d[0]+'"]')][0];el.checked=true;el.dispatchEvent(new Event('change',{bubbles:true}));}
 const secondGround=[...document.querySelectorAll('input[data-key="ground"]')][1];secondGround.checked=true;secondGround.dispatchEvent(new Event('change',{bubbles:true}));
 assert(rec().context.ground.length===2,'Ground floor supports multiple answers');
+const residential=document.querySelector('input[data-key="groundUse"][value="Residential"]');residential.checked=true;residential.dispatchEvent(new Event('change',{bubbles:true}));
+assert(rec().context.groundUse.includes('Gastronomy')&&rec().context.groundUse.includes('Residential'),'Ground-floor use supports mixed uses');
+rec().context.streetRatio='Narrow';render();
+assert(document.querySelectorAll('input[data-key="streetRatio"]').length===3&&rec().context.streetRatio==='Street width < building height','Three explicit street-width choices migrate previous answers');
 document.querySelector('#next').click();assert(step===2,'Context advances');
 let el=document.querySelector('input[value="Heterogeneous"]');el.checked=true;el.dispatchEvent(new Event('change',{bubbles:true}));
 assert(rec().types.length===2,'Heterogeneous creates two types');
@@ -68,28 +83,66 @@ showConflicts();document.querySelector('[data-resolve="incoming"]').click();
 assert(rec().notes==='Different assessment'&&conflicts.length===0,'Incoming conflict resolution works');
 document.querySelector('#mergeDialog').close();step=4;render();document.querySelector('#next').click();await saveQueue;await new Promise(r=>setTimeout(r,50));
 assert(records['test-1'].completed&&current==='test-2','Complete advances to next photograph');
-view='insights';render();assert(document.querySelector('#radar svg')&&document.querySelector('#clusters').textContent.includes('French balcony'),'Analysis renders');
-assert(document.querySelectorAll('[data-radar-dimension]').length===8,'Radar dimensions are selectable');
-const previousDims=[...analysisSettings.radarDims];
-document.querySelectorAll('[data-radar-dimension]').forEach(el=>{el.checked=false;});
-document.querySelector('[data-radar-dimension]').dispatchEvent(new Event('change',{bubbles:true}));
-assert(document.querySelector('#radar').textContent.includes('at least three'),'Radar requires at least three axes');
-document.querySelectorAll('[data-radar-dimension]').forEach(el=>{el.checked=['windows','share','relief'].includes(el.dataset.radarDimension);});
-document.querySelector('[data-radar-dimension]').dispatchEvent(new Event('change',{bubbles:true}));
-assert(document.querySelector('#radar svg').textContent.includes('Share of entire façade'),'Selected radar axes update diagram');
-document.querySelector('#relationshipX').value='material';document.querySelector('#relationshipX').dispatchEvent(new Event('change',{bubbles:true}));
-document.querySelector('#relationshipY').value='kind';document.querySelector('#relationshipY').dispatchEvent(new Event('change',{bubbles:true}));
-assert(document.querySelector('#relationshipPlot svg')&&relationshipGroups.length===1,'Relationship chart supports categorical axes');
-const observed=records['test-1'];observed.types.push(structuredClone(observed.types[0]));render();
-assert(relationshipGroups[0].length===2&&document.querySelector('#relationshipCount').textContent.includes('2 of 2'),'Overlapping observations are grouped and counted');
-document.querySelector('#compareB').value='test-1|1';document.querySelector('#compareB').dispatchEvent(new Event('change',{bubbles:true}));
-assert(analysisSettings.radarB==='test-1|1'&&document.querySelector('#radarDetails').textContent.includes('Type 2'),'Radar compares individual types within a photo');
-document.querySelector('[data-relationship-group]').dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true}));
-assert(document.querySelectorAll('[data-analysis-profile]').length===2,'Chart bubble lists underlying profiles');
-document.querySelectorAll('[data-analysis-profile]')[1].click();assert(view==='entry'&&step===3&&typeIndex===1,'Relationship chart opens selected type');
-observed.types.pop();analysisSettings.radarDims=previousDims;analysisSettings.x='windows';analysisSettings.y='enclosure';view='insights';render();await persist();
-assert(analysisValue({type:{windows:'Unknown'},record:{context:{}}},analysisDimensions[0])===null,'Unknown chart values are omitted rather than treated as zero');
-assert(document.querySelectorAll('#mapPlot circle').length===2,'GPS map includes unclassified photographs');
+view='insights';render();assert(document.querySelector('#geographicMap')&&document.querySelector('#analysisFilterRows')&&!document.querySelector('#radar')&&!document.querySelector('#relationshipPlot')&&!document.querySelector('main table'),'Analysis contains only map and filters');
+document.querySelector('#addAnalysisFilter').click();
+let valueSelect=document.querySelector('[data-filter-value="0"]');valueSelect.value='French balcony';valueSelect.dispatchEvent(new Event('change',{bubbles:true}));
+assert(filteredAnalysisPhotos.length===1&&overviewPoints.length===1&&overviewPoints[0].id==='test-1','Attribute filter limits photo results and map together');
+analysisFilters.rules=[{key:'type.kind',value:'French balcony'},{key:'type.kind',value:'Balcony'}];updateFilteredAnalysis();assert(filteredAnalysisPhotos.length===1,'Repeated values for one attribute act as alternatives');
+const keptTypes=structuredClone(records['test-1'].types);records['test-1'].types=[{kind:'French balcony',material:'Masonry'},{kind:'Balcony',material:'Concrete'}];
+analysisFilters.rules=[{key:'type.kind',value:'Balcony'},{key:'type.material',value:'Masonry'}];updateFilteredAnalysis();assert(!filteredAnalysisPhotos.length&&!overviewPoints.length,'Type filters must match the same facade type');
+analysisFilters.rules[1].value='Concrete';updateFilteredAnalysis();assert(filteredAnalysisPhotos.length===1,'Matching attributes within one type are included');
+records['test-1'].types=keptTypes;
+analysisFilters.rules=[{key:'context.groundUse',value:'Residential'}];updateFilteredAnalysis();assert(filteredAnalysisPhotos.length===1,'Ground-floor multiple-use attributes can be filtered');
+const previousLocation=structuredClone(records['test-2'].location);records['test-2'].location={lat:'',lng:''};analysisFilters.rules=[{key:'record.location',value:'No coordinates'}];updateFilteredAnalysis();assert(filteredAnalysisPhotos.length===1&&overviewPoints.length===0&&document.querySelector('#analysisMatchCount').textContent.includes('1 without coordinates'),'Matching photos without coordinates remain listed but not plotted');
+records['test-2'].location=previousLocation;document.querySelector('#clearAnalysisFilters').click();assert(filteredAnalysisPhotos.length===2&&overviewPoints.length===2,'Clear all restores the full map');
+assert(document.querySelectorAll('[data-gallery-photo]').length===2,'Gallery displays all matching facade photographs');
+document.querySelector('[data-analysis-view="gallery"]').click();assert(document.querySelector('#analysisMapSection').hidden&&!document.querySelector('#analysisGallerySection').hidden&&overviewMap===null,'Gallery-only mode hides and disposes map');
+document.querySelector('[data-gallery-photo="test-1"]').click();assert(document.querySelector('#galleryPreview').open&&document.querySelector('.gallery-preview-tags').textContent.includes('French balcony'),'Gallery opens a larger photo preview with its tags');
+document.querySelector('[data-preview-direction="1"]').click();assert(galleryPreviewId==='test-2','Preview advances within filtered photos');
+document.querySelector('[data-preview-edit]').click();assert(view==='entry'&&current==='test-2'&&!document.querySelector('#galleryPreview').open,'Edit tags opens the selected photo without changing answers');
+view='insights';render();document.querySelector('[data-analysis-view="map"]').click();assert(!document.querySelector('#analysisMapSection').hidden&&document.querySelector('#analysisGallerySection').hidden,'Map-only mode hides gallery');
+document.querySelector('[data-analysis-view="both"]').click();assert(!document.querySelector('#analysisMapSection').hidden&&!document.querySelector('#analysisGallerySection').hidden,'Both mode displays map and gallery');
+analysisFilters.rules=[{key:'type.kind',value:'French balcony'}];updateFilteredAnalysis();assert(document.querySelectorAll('[data-gallery-photo]').length===1&&overviewPoints.length===1,'One filter updates both gallery and map');
+document.querySelector('#clearAnalysisFilters').click();
+document.querySelector('#addRelationshipGraph').click();document.querySelector('#addRelationshipGraph').click();
+assert(document.querySelectorAll('[data-graph-card]').length===2&&analysisFilters.graphs.length===2,'Multiple relationship graphs can be added');
+const firstGraph=analysisFilters.graphs[0],secondGraph=analysisFilters.graphs[1];
+let axis=[...document.querySelectorAll('[data-comparison-axis="x"]')].find(e=>e.dataset.comparisonId===secondGraph.id);axis.value='type.material';axis.dispatchEvent(new Event('change',{bubbles:true}));
+axis=[...document.querySelectorAll('[data-comparison-axis="y"]')].find(e=>e.dataset.comparisonId===secondGraph.id);axis.value='type.kind';axis.dispatchEvent(new Event('change',{bubbles:true}));
+assert(firstGraph.x==='type.windows'&&secondGraph.x==='type.material'&&secondGraph.y==='type.kind','Each graph has independent attribute selectors');
+assert(relationshipGraphGroups.get(secondGraph.id).length===1,'Graph plots known categorical attribute pairs');
+document.querySelector('[data-comparison-point]').dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true}));
+assert(document.querySelector('[data-comparison-photo]'),'Selecting a graph bubble lists underlying photos');
+document.querySelector('[data-comparison-photo]').click();assert(document.querySelector('#galleryPreview').open,'Graph observations open photo previews');document.querySelector('[data-preview-close]').click();
+analysisFilters.rules=[{key:'type.kind',value:'Balcony'}];updateFilteredAnalysis();assert(relationshipGraphGroups.get(firstGraph.id).length===0,'Graphs respect current attribute filters');
+document.querySelector('#clearAnalysisFilters').click();assert(analysisFilters.graphs.length===2&&relationshipGraphGroups.get(firstGraph.id).length===1,'Clearing filters preserves graphs and restores observations');
+document.querySelector('[data-remove-comparison]').click();assert(analysisFilters.graphs.length===1&&document.querySelectorAll('[data-graph-card]').length===1,'Graphs can be removed independently');
+let chartSelector=document.querySelector('[data-graph-type]');chartSelector.value='bar';chartSelector.dispatchEvent(new Event('change',{bubbles:true}));
+let attributeSelector=document.querySelector('[data-distribution-attribute]');attributeSelector.value='type.material';attributeSelector.dispatchEvent(new Event('change',{bubbles:true}));
+assert(document.querySelector('.comparison-svg svg').getAttribute('aria-label').includes('Bar chart')&&relationshipGraphGroups.get(secondGraph.id).length===1,'Bar chart counts the selected attribute');
+chartSelector=document.querySelector('[data-graph-type]');chartSelector.value='scatter';chartSelector.dispatchEvent(new Event('change',{bubbles:true}));
+assert(secondGraph.x==='type.material'&&secondGraph.y==='type.kind'&&document.querySelector('[data-comparison-axis="y"]'),'Switching back to XY preserves chosen axes');
+document.querySelector('#addRelationshipGraph').click();const pieGraph=analysisFilters.graphs[1];
+chartSelector=[...document.querySelectorAll('[data-graph-type]')].find(e=>e.dataset.graphType===pieGraph.id);chartSelector.value='pie';chartSelector.dispatchEvent(new Event('change',{bubbles:true}));
+attributeSelector=document.querySelector('[data-distribution-attribute]');attributeSelector.value='context.groundUse';attributeSelector.dispatchEvent(new Event('change',{bubbles:true}));
+let distribution=distributionGraphData(pieGraph,graphDefinitions());
+assert(distribution.answered===1&&distribution.total===2&&distribution.buckets.length===2&&document.querySelector('.distribution-pie'),'Pie chart counts multiple selections with correct selection denominator');
+const previousTypes=records['test-1'].types;records['test-1'].types=[...previousTypes,...previousTypes];distribution=distributionGraphData(pieGraph,graphDefinitions());
+assert(distribution.answered===1&&distribution.total===2,'Photo attributes are counted once per photo in distribution charts');records['test-1'].types=previousTypes;
+document.querySelector('.distribution-legend-item').click();assert(document.querySelector('[data-comparison-photo]'),'Pie legend reveals contributing photo observations');
+const legacy=restoreRelationshipGraphs([{id:'old',x:'type.windows',y:'type.kind'}]);assert(legacy[0].type==='scatter','Previously saved XY graphs remain compatible');
+let colorToggle=[...document.querySelectorAll('[data-enable-graph-color]')].find(e=>e.dataset.enableGraphColor===pieGraph.id);colorToggle.checked=true;colorToggle.dispatchEvent(new Event('change',{bubbles:true}));
+let palette=[...document.querySelectorAll('[data-graph-color-style]')].find(e=>e.dataset.graphColorStyle===pieGraph.id);palette.value='categories';palette.dispatchEvent(new Event('change',{bubbles:true}));
+assert(pieGraph.colorEnabled&&pieGraph.colorStyle==='categories'&&document.querySelector('#mapColorLegend'),'Graph color toggle adds the shared map legend');
+assert(graphColorFor(pieGraph,'Gastronomy')!==graphColorFor(pieGraph,'Residential'),'Distinct categories receive distinct colors');
+const fakeMarker=document.createElement('button');fakeMarker.className='overview-marker';fakeMarker.dataset.colorPhotoIds=JSON.stringify(['test-1']);document.querySelector('#mapPlot').append(fakeMarker);refreshMapColors();
+assert(fakeMarker.style.background.includes('conic-gradient')&&fakeMarker.dataset.mappedColors.split(',').length===2,'Multi-valued photo receives a split marker matching graph colors');fakeMarker.remove();
+const ratioGraph={...pieGraph,type:'scatter',x:'type.windows',colorAxis:'x',colorStyle:'gradient'};assert(graphColorFor(ratioGraph,'0')!==graphColorFor(ratioGraph,'1')&&graphColorFor(ratioGraph,'Unknown')==='#777777','Gradient colors numeric values and keeps unknown values neutral');
+colorToggle=[...document.querySelectorAll('[data-enable-graph-color]')].find(e=>e.dataset.enableGraphColor===secondGraph.id);colorToggle.checked=true;colorToggle.dispatchEvent(new Event('change',{bubbles:true}));
+assert(secondGraph.colorEnabled&&!pieGraph.colorEnabled,'Only one graph controls map colors at a time');
+colorToggle=[...document.querySelectorAll('[data-enable-graph-color]')].find(e=>e.dataset.enableGraphColor===pieGraph.id);colorToggle.checked=true;colorToggle.dispatchEvent(new Event('change',{bubbles:true}));
+await persist();
+assert(overviewPoints.length===2&&document.querySelector('#geographicMap')&&document.querySelectorAll('#overviewMapFallback circle').length===2,'Geographic overview includes unclassified photographs and offline fallback');
 let exported;download=(content,name,mime)=>{exported={content,name,mime};};
 assert(document.querySelectorAll('header button').length===1&&document.querySelector('header button').textContent==='Save','Header has only one Save action');
 document.querySelector('#saveHtml').click();assert(document.querySelector('#saveDialog').open,'Save asks for initials');
@@ -105,7 +158,12 @@ assert(saved.photos.length===2&&saved.records['test-1'].completed&&saved.photos.
 assert(saved.records['test-1'].location.source==='Photo GPS metadata','HTML export retains location provenance');
 assert(!parsed.querySelector('#saveHtml').disabled,'Exported copy keeps save button enabled');
 assert(saved.saveMeta.revision===1&&saved.saveMeta.initials==='BU'&&!parsed.querySelector('#saveDialog').open,'HTML embeds version and initials with closed save dialog');
-assert(saved.analysisSettings.radarDims.length===4&&saved.analysisSettings.x==='windows','Saved HTML retains chart choices');
+assert(Array.isArray(saved.analysisFilters.rules)&&saved.analysisFilters.search==='','Saved HTML retains map filter settings');
+assert(saved.analysisFilters.mode==='both'&&!parsed.querySelector('#galleryPreview'),'HTML preserves display preference and omits temporary preview dialog');
+assert(saved.analysisFilters.graphs.length===2&&saved.analysisFilters.graphs[0].x==='type.material'&&saved.analysisFilters.graphs[1].type==='pie'&&saved.analysisFilters.graphs[1].attribute==='context.groundUse','HTML preserves graph types and attribute configurations');
+assert(saved.analysisFilters.graphs[1].colorEnabled&&saved.analysisFilters.graphs[1].colorStyle==='categories','HTML preserves graph and map color mapping');
+assert(saved.records['test-1'].buildingType===1&&saved.records['test-2'].buildingType===1,'Building type numbers are included in saved HTML');
+assert(saved.records['test-1'].context.streetRatio==='Street width < building height','Street-width comparison survives HTML export');
 await saveHtml('BU');assert(exported.name==='Facade-ID_BU_v002.html'&&saveMeta.revision===2,'Subsequent save increments revision');
 const savedState=await new Promise((resolve,reject)=>{const request=db.transaction('state').objectStore('state').get(embedded.dataset);request.onsuccess=()=>resolve(JSON.parse(request.result));request.onerror=reject;});
 assert(savedState.saveMeta.revision===2&&savedState.saveMeta.initials==='BU','Browser storage retains revision and initials');
@@ -121,9 +179,24 @@ await saveHtml('BU');const withUpload=JSON.parse(new DOMParser().parseFromString
 assert(withUpload.photos.length===3&&withUpload.photos.some(p=>p.id===uploaded.id)&&withUpload.records[uploaded.id].location.lat==='48.2000000','Saved HTML contains uploaded image and its answers');
 photos=photos.filter(p=>p.id!==uploaded.id);delete records[uploaded.id];
 mergeData(withUpload);assert(photos.some(p=>p.id===uploaded.id)&&records[uploaded.id].location.lng==='11.6000000','Merge imports new participant photos and their answers');
+const originalConfirm=window.confirm;current=uploaded.id;window.confirm=()=>false;await deleteCurrentPhoto();
+assert(photos.some(p=>p.id===uploaded.id),'Cancelling photo deletion keeps image and answers');
+window.confirm=()=>true;await deleteCurrentPhoto();window.confirm=originalConfirm;
+assert(!photos.some(p=>p.id===uploaded.id)&&!records[uploaded.id]&&deletedPhotoIds.has(uploaded.id),'Deleting a photo removes image and answers');
+const deleteState=await new Promise((resolve,reject)=>{const request=db.transaction('state').objectStore('state').get(embedded.dataset);request.onsuccess=()=>resolve(JSON.parse(request.result));request.onerror=reject;});
+assert(deleteState.deletedPhotoIds.includes(uploaded.id),'Deleted image IDs persist in browser storage');
+mergeData(withUpload);assert(!photos.some(p=>p.id===uploaded.id),'Merging an older copy does not resurrect a locally deleted image');
+await saveHtml('BU');const afterDelete=JSON.parse(new DOMParser().parseFromString(exported.content,'text/html').querySelector('#collection-data').textContent);
+assert(!afterDelete.photos.some(p=>p.id===uploaded.id)&&!afterDelete.records[uploaded.id]&&afterDelete.deletedPhotoIds.includes(uploaded.id),'Saved HTML omits deleted image and answers');
+photos=[...withUpload.photos];records=structuredClone(withUpload.records);restoreDeletedPhotos(deleteState.deletedPhotoIds);applyPhotoDeletions();
+assert(!photos.some(p=>p.id===uploaded.id)&&!records[uploaded.id],'Reopening old embedded photos respects saved deletions');
+await undoPhotoDelete();assert(photos.some(p=>p.id===uploaded.id)&&records[uploaded.id].location.lng==='11.6000000'&&!deletedPhotoIds.has(uploaded.id),'Undo restores deleted photo and its answers');
 document.body.innerHTML='<pre id="test-results">PASS: '+results.join('\nPASS: ')+'</pre>';
 }catch(e){document.body.innerHTML='<pre id="test-results">FAIL: '+e.stack+'\nPassed: '+results.join(', ')+'</pre>';}
 }checks();
 </script>
 '''
 (root / 'browser-checks.html').write_text(html.replace('</body>', checks + '</body>'), encoding='utf-8')
+data['dataset'] += '-sorting-preview'
+preview = re.sub(r'(<script id="collection-data" type="application/json">).*?(</script>)', lambda m: m[1] + json.dumps(data) + m[2], html, flags=re.S)
+(root / 'sorting-preview.html').write_text(preview,encoding='utf-8')

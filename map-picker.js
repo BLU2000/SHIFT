@@ -151,3 +151,47 @@ document.addEventListener('click', event => {
     if (photo.location) { writeMapPosition(photo.location, 'Photo GPS metadata'); syncLocationMarker(true); }
   }
 });
+
+let overviewMap=null,overviewMarkers=[],overviewPoints=[],overviewLoadTimer=null;
+function disposeOverviewMap(){
+  clearTimeout(overviewLoadTimer);
+  overviewMarkers.forEach(marker=>marker.remove());overviewMarkers=[];
+  if(overviewMap)overviewMap.remove();overviewMap=null;
+}
+function fitOverviewPhotos(){
+  if(!overviewMap||!overviewPoints.length)return;
+  const bounds=new maplibregl.LngLatBounds();overviewPoints.forEach(p=>{const v=validPosition(locationFor(p));bounds.extend([v.lng,v.lat]);});
+  overviewMap.fitBounds(bounds,{padding:55,maxZoom:17,duration:0});
+}
+function mountOverviewMap(list){
+  overviewPoints=list.filter(p=>validPosition(locationFor(p)));
+  const host=document.getElementById('mapPlot'),fallback=host.innerHTML;
+  host.innerHTML=`<div class="overview-map-toolbar"><span>${overviewPoints.length} located · ${list.length-overviewPoints.length} without coordinates</span><button type="button" id="fitOverviewPhotos">Show all photos</button></div><div id="geographicMap" class="geographic-map" aria-label="Interactive map of all photo locations"></div><p id="overviewMapStatus" class="hint" role="status">Loading live street map… Internet required.</p><details id="overviewMapFallback" hidden><summary>Offline coordinate overview</summary>${fallback}</details>`;
+  const status=(message,failed=false)=>{const label=document.getElementById('overviewMapStatus');if(label)label.textContent=message;const backup=document.getElementById('overviewMapFallback');if(backup)backup.hidden=!failed;};
+  if(window.DISABLE_LIVE_OVERVIEW_FOR_TESTS){status('Live overview disabled for automated form checks.');return;}
+  if(typeof maplibregl==='undefined'){status('Live map controls are unavailable. The offline coordinate overview is available below.',true);return;}
+  try{
+    const first=overviewPoints[0]&&validPosition(locationFor(overviewPoints[0]));
+    const map=new maplibregl.Map({container:'geographicMap',style:LIVE_MAP_STYLE,center:first?[first.lng,first.lat]:[11.58,48.14],zoom:12,attributionControl:{compact:false},maxZoom:20});overviewMap=map;
+    map.addControl(new maplibregl.NavigationControl({showCompass:false}),'top-right');
+    const groups=new Map();overviewPoints.forEach(photo=>{const location=validPosition(locationFor(photo)),key=location.lat+','+location.lng;if(!groups.has(key))groups.set(key,[]);groups.get(key).push(photo);});
+    for(const group of groups.values()){
+      const position=validPosition(locationFor(group[0])),element=document.createElement('button');
+      element.type='button';element.dataset.colorPhotoIds=JSON.stringify(group.map(p=>p.id));element.className='overview-marker';element.textContent=group.length>1?String(group.length):'';
+      element.setAttribute('aria-label',group.length>1?group.length+' photos at this location':group[0].name);element.title=group.map(p=>p.name).join(', ');
+      const marker=new maplibregl.Marker({element}).setLngLat([position.lng,position.lat]).addTo(map);overviewMarkers.push(marker);
+      element.addEventListener('click',event=>{
+        event.stopPropagation();
+        const content=document.createElement('div');content.className='overview-popup';
+        const title=document.createElement('strong');title.textContent=group.length>1?group.length+' photos at this location':group[0].name;content.append(title);
+        group.forEach(photo=>{const button=document.createElement('button');button.type='button';button.dataset.photo=photo.id;button.className='overview-photo';const image=document.createElement('img');image.src=photo.src;image.alt='';const text=document.createElement('span');text.textContent=photo.name+' · '+(records[photo.id]?.completed?'Completed':records[photo.id]?.updatedAt?'In progress':'Not started');button.append(image,text);content.append(button);});
+        new maplibregl.Popup({maxWidth:'300px'}).setLngLat([position.lng,position.lat]).setDOMContent(content).addTo(map);
+      });
+    }
+    fitOverviewPhotos();refreshMapColors();
+    map.on('load',()=>{clearTimeout(overviewLoadTimer);if(overviewMap===map)status('Scroll or use + / − to zoom. Drag to pan. Select a marker to open its photos.');});
+    map.on('error',()=>{if(overviewMap===map)status('Some map data could not load. Check your connection, or use the offline coordinate overview below.',true);});
+    overviewLoadTimer=setTimeout(()=>{if(overviewMap===map&&!map.isStyleLoaded())status('The live map is unavailable. Use the offline coordinate overview below.',true);},15000);
+  }catch(error){disposeOverviewMap();status('The live map is unavailable in this browser. Use the offline coordinate overview below.',true);}
+}
+document.addEventListener('click',event=>{if(event.target.closest('#fitOverviewPhotos'))fitOverviewPhotos();});

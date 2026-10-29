@@ -7,7 +7,7 @@ const analysisDimensions=[
   {key:'enclosure',label:'Threshold enclosure',scope:'type',values:['Low','Medium','High'],radar:true,threshold:true},
   {key:'depth',label:'Threshold depth',scope:'type',values:['Under 1 m','1 m or more'],radar:true,threshold:true},
   {key:'surroundingGreen',label:'Surrounding greenery',scope:'context',values:['None','Low','Medium','High'],radar:true},
-  {key:'streetRatio',label:'Street width / building height',scope:'context',values:['Narrow','Balanced','Wide'],radar:true},
+  {key:'streetRatio',label:'Street width / building height',scope:'context',values:['Street width < building height','Street width = building height','Street width > building height'],radar:true},
   {key:'thermal',label:'Thermal envelope',scope:'type',values:['Uninsulated','Insulated'],radar:true},
   {key:'kind',label:'Façade type',scope:'type',values:['Punched-window façade','Loggia','Semi-loggia','Balcony','Bay window','French balcony','Other']},
   {key:'material',label:'Structural material',scope:'type',values:['Masonry','Concrete','Steel','Timber','Other']},
@@ -25,7 +25,7 @@ function analysisProfiles(){return photos.flatMap(p=>(records[p.id]?.types||[]).
 function analysisValue(profile,dimension,normalized=false){
   if(dimension.threshold&&thresholdValue(profile.type)!=='Yes')return null;
   const raw=(dimension.scope==='context'?profile.record.context:profile.type)[dimension.key];
-  if(dimension.quantitative){const value={'0':0,'¼':.25,'⅓':1/3,'½':.5,'1':1}[raw];return value===undefined?null:{value,raw};}
+  if(dimension.quantitative){const value={'0':0,'¼':.25,'⅓':1/3,'½':.5,'⅔':2/3,'¾':.75,'1':1}[raw];return value===undefined?null:{value,raw};}
   const index=dimension.values.indexOf(raw);if(index<0)return null;
   return {value:normalized?index/(dimension.values.length-1):index,raw};
 }
@@ -69,7 +69,7 @@ function renderRelationship(){
   const profiles=analysisProfiles(),valid=profiles.flatMap(p=>{const xv=analysisValue(p,x),yv=analysisValue(p,y);return xv&&yv?[{profile:p,x:xv,y:yv}]:[];});
   const groups=new Map();valid.forEach(p=>{const key=p.x.value+'|'+p.y.value;if(!groups.has(key))groups.set(key,[]);groups.get(key).push(p);});relationshipGroups=[...groups.values()];
   const width=760,height=500,left=150,right=35,top=35,bottom=150,plotW=width-left-right,plotH=height-top-bottom;
-  const ticks=d=>d.quantitative?[0,.25,.5,.75,1].map(v=>({value:v,label:String(v)})):d.values.map((label,value)=>({value,label}));
+  const ticks=d=>d.quantitative?[{value:0,label:'0'},{value:.25,label:'¼'},{value:1/3,label:'⅓'},{value:.5,label:'½'},{value:2/3,label:'⅔'},{value:.75,label:'¾'},{value:1,label:'1'}]:d.values.map((label,value)=>({value,label}));
   const scale=(d,v,length)=>d.quantitative?v*length:(v+.5)/d.values.length*length;
   let svg=`<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(x.label)} versus ${esc(y.label)}"><rect x="${left}" y="${top}" width="${plotW}" height="${plotH}" fill="white" stroke="#00000055"/>`;
   ticks(x).forEach(t=>{const px=left+scale(x,t.value,plotW);svg+=`<line x1="${px}" y1="${top}" x2="${px}" y2="${top+plotH}" stroke="#00000015"/><text x="${px}" y="${top+plotH+18}" transform="rotate(30 ${px} ${top+plotH+18})" text-anchor="start" font-size="11">${esc(t.label)}</text>`;});
