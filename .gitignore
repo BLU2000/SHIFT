@@ -1,6 +1,20 @@
 images/browser/*.bmp
 browser-checks.html
 .qa-chrome/
+.qa-interactive-chrome/
 qa-dom.txt
 qa-chrome-errors.txt
 sorting-preview.html
+
+# Local browser test profiles (cache, extensions, locks, and user data)
+.qa*/
+
+# Generated browser verification output
+*-checks-result.txt
+*-chrome-errors.txt
+priority-tags-v017-chrome-errors.txt
+analysis-canvas-interaction.png
+analysis-canvas-data-flow.png
+analysis-canvas-infinite.png
+analysis-map-controls.png
+analysis-canvas-centered-wires.png

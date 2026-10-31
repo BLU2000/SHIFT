@@ -1,0 +1,41 @@
+<!doctype html><meta charset="utf-8"><title>Interactive SegFormer checks</title><pre id="result">RUNNING</pre><iframe id="app" src="/" style="width:1250px;height:900px"></iframe><script>
+window.addEventListener('load',async()=>{try{const w=document.getElementById('app').contentWindow;const checks=await w.eval(`(async()=>{
+ const checks=[],ok=(v,label)=>{if(!v)throw Error(label);checks.push(label);};
+ for(let i=0;i<100&&(!image||!photos.length);i++)await new Promise(r=>setTimeout(r,100));
+ ok(photos.length===202,'Collection photos loaded');
+ const p=photos.find(p=>p.id==='IMG_4444');ok(p,'Known punched-window facade available');await choose(p.id);
+ const bounds=canvas.getBoundingClientRect(),capture=canvas.setPointerCapture;canvas.setPointerCapture=()=>{};
+ ok(roi&&roi.length===4&&!$('detect').disabled,'Facade frame is present without drawing a new rectangle');for(const [type,x,y]of [['pointerdown',.03,.03],['pointermove',.04,.15],['pointerup',.04,.15],['pointerdown',.97,.97],['pointermove',.97,.86],['pointerup',.97,.86]])canvas.dispatchEvent(new PointerEvent(type,{clientX:bounds.left+x*bounds.width,clientY:bounds.top+y*bounds.height,bubbles:true}));canvas.setPointerCapture=capture;
+ ok(roi&&roi.length===4&&!$('detect').disabled,'Facade frame handles adjust the crop and keep Detect available');
+ await detect();const entry=results[current];ok(entry&&entry.result.window_pixels>0,'Actual local model detects window pixels');ok(entry.result.wall_pixels>0,'Actual local model detects facade pixels');
+ ok(!$('preview').hidden&&$('maskImage').src.startsWith('data:image/png'),'Segmentation preview appears');
+ $('overlay').checked=false;$('overlay').dispatchEvent(new Event('change'));ok($('maskImage').hidden,'Overlay can be hidden');
+ $('overlay').checked=true;$('overlay').dispatchEvent(new Event('change'));$('opacity').value='.35';$('opacity').dispatchEvent(new Event('input'));ok($('maskImage').style.opacity==='0.35','Overlay opacity adjustable');
+ $('verified').checked=true;$('verified').dispatchEvent(new Event('change'));ok(entry.result.verified&&!$('export').disabled,'Reviewed result ready for export');
+ ok(entry.result.photo_id==='IMG_4444'&&dataset==='facade-id-new-photos-20261028','Results retain survey photo and dataset IDs');
+ const rawRatio=entry.result.wwr_percent;initializeVectors(entry);renderVectors();const count=entry.vector.windows.length;
+ ok(count>5&&entry.window_objects.length>=count,'Mask components fitted into independent window rectangles');
+ ok(WWRRectangles.measure([0,0,1,1],[{box:[0,0,.5,.5]},{box:[.25,0,.75,.5]}]).wwr_percent===37.5,'Rectangle overlaps counted once');
+ ok(WWRRectangles.measure([.25,0,.75,1],[{box:[0,0,1,.5]}]).wwr_percent===50,'Window area clipped to edited facade');
+ const layerBounds=layer.getBoundingClientRect(),savedCapture=layer.setPointerCapture;layer.setPointerCapture=()=>{};
+ function dragRect(target,a,b){target.dispatchEvent(new PointerEvent('pointerdown',{clientX:layerBounds.left+a[0]*layerBounds.width,clientY:layerBounds.top+a[1]*layerBounds.height,bubbles:true}));layer.dispatchEvent(new PointerEvent('pointermove',{clientX:layerBounds.left+b[0]*layerBounds.width,clientY:layerBounds.top+b[1]*layerBounds.height,bubbles:true}));layer.dispatchEvent(new PointerEvent('pointerup',{clientX:layerBounds.left+b[0]*layerBounds.width,clientY:layerBounds.top+b[1]*layerBounds.height,bubbles:true}));}
+ const first=entry.vector.windows[0],old=[...first.box],center=[(old[0]+old[2])/2,(old[1]+old[3])/2];dragRect(layer.querySelector('.window-box'),center,[center[0]+.01,center[1]+.01]);
+ ok(first.box[0]>old[0],'Window rectangles move by dragging');
+ const beforeResize=[...first.box];dragRect(layer.querySelector('[data-corner="se"]'),[beforeResize[2],beforeResize[3]],[Math.min(.99,beforeResize[2]+.02),Math.min(.99,beforeResize[3]+.02)]);
+ ok(first.box[2]>beforeResize[2]&&first.box[3]>beforeResize[3],'Corner handles resize window rectangles');
+ $('rectAdd').click();dragRect(layer,[.02,.02],[.08,.08]);ok(entry.vector.windows.length===count+1,'Missing windows can be added');
+ const manualId=rectSelected;$('rectRemove').click();const removeTarget=layer.querySelector('[data-rect-id="'+manualId+'"]');removeTarget.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true}));ok(entry.vector.windows.length===count,'Remove window deletes the clicked rectangle');
+ ok(document.querySelectorAll('.rectangle-tools button').length===2,'Only Add window and Remove window controls remain');
+ ok(layer.querySelector('.facade-box').dataset.rectId==='facade','Red facade frame is selectable');dragRect(layer.querySelector('[data-corner="se"]'),[1,1],[.9,.9]);ok(Math.abs(entry.vector.facade[2]-.9)<1e-6&&Math.abs(entry.vector.facade[3]-.9)<1e-6,'Red facade frame resizes with corner handles');
+ layer.setPointerCapture=savedCapture;
+ ok(entry.result.wwr_percent===rawRatio&&!entry.result.verified,'Geometry edits preserve raw AI ratio and invalidate approval');
+ ok(entry.result.vector_measurement.wwr_percent===WWRRectangles.measure(entry.vector.facade,entry.vector.windows).wwr_percent,'Saved rectangle ratio follows edited geometry');
+ await flushSaves();const saved=await restoreSaved(current);ok(saved.run_id===entry.run_id&&JSON.stringify(saved.vector.windows)===JSON.stringify(entry.vector.windows)&&JSON.stringify(saved.vector.facade)===JSON.stringify(entry.vector.facade),'Manual window edits persist to the image bundle');
+ const savedPhoto=current,nextPhoto=photos[photos.findIndex(p=>p.id===current)+1];await $('saveEdits').onclick();ok($('diskSaveState').textContent.includes('ZIP has been updated'),'Save button confirms the image ZIP was updated');ok(current===nextPhoto.id,'Successful Save automatically opens next image');await choose(savedPhoto);
+ $('verified').checked=true;$('verified').dispatchEvent(new Event('change'));await flushSaves();const reviewed=await(await fetch('/api/reviewed')).json();ok(reviewed.results.some(r=>r.photo_id===current&&r.verified),'JSON export reads latest reviewed result from disk');
+ const id=current,run=entry.run_id;delete results[id];await choose(id);ok(results[id].run_id===run&&results[id].result.verified,'Opening a photo restores saved crop, windows and review status');
+ ok(!$('detect').disabled,'Detect remains enabled after a saved result');await $('detect').onclick();ok(results[id].run_id!==run,'Detect button reruns and replaces the stored result');
+ const stale=await fetch('/api/save',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({photo_id:id,run_id:run,result:entry.result})});ok(stale.status===400,'Outdated run cannot overwrite newer detection');await flushSaves();
+ ok(!$('reset').disabled&&!$('reset').hidden,'Redraw crop available after detection');$('reset').click();ok(roi!==null&&!results[current]&&$('preview').hidden,'Reset restores an adjustable frame and clears the old preview');ok(Math.abs(entry.vector.facade[2]-.9)<1e-6,'Adjusted vector facade stays independent of the photo crop');return checks;
+})()`);document.getElementById('result').textContent='PASS: '+checks.length+' checks\n'+checks.join('\n');}catch(error){document.getElementById('result').textContent='FAIL: '+error.stack;}});
+</script>

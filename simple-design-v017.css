@@ -1,0 +1,95 @@
+/* Simple white fieldbook with typewriter typography and vivid data colors. */
+:root,:root[data-theme=dark]{color-scheme:light;--bg:#fff;--paper:#fff;--ink:#000;--muted:#000;--line:#ccc;--night-bg:#fff;--night-panel:#fff;--night-raised:#fff;--night-text:#000;--night-muted:#000;--night-line:#ccc;--night-accent:#000}
+html,body,main{background:#fff!important;color:#000!important}
+body,button,input,select,textarea,svg text{font-family:'Courier New',Courier,monospace!important}
+body :is(header,aside,footer,section,article,dialog,fieldset,details,summary,button,input,select,textarea,.form-panel,.photo-panel,.photo-frame,.insight-card,.facade-gallery-card,.analysis-view-switch,.comparison-graph,.graph-color-legend,.sort-folder,.sort-photo,.sort-preview,.sorting-stage,.sort-finished,.folder-tab,.folder-thumbs,.sorting-scroll,.location-picker,.distribution-legend-item,.option,.bulk-photo,.warning,.notice,.photo-item,.gallery-preview-header,.gallery-preview-footer){background-color:#fff!important;color:#000!important;border-radius:0!important;box-shadow:none!important}
+body :is(h1,h2,h3,h4,p,label,legend,small,a,span,summary,figcaption,output,.step,.intro,.eyebrow,.sort-center,.sorting-toolbar,.sort-save-note,.folder-title,.folder-plus,.folder-count,.photo-caption,.app-footer,.hint,.muted){color:#000!important}
+body button,body input,body select,body textarea{border-color:#aaa!important}
+body :is(button:hover,.option:hover,.photo-item:hover,.facade-gallery-card:hover){outline:1px solid #000;outline-offset:-1px}
+body :is(button.primary,.analysis-view-switch button[aria-pressed=true],.type-tabs .active,.option:has(input:checked),.photo-item.active,.bulk-photo:has(input:checked)){background:#fff!important;color:#000!important;border-color:#000!important;box-shadow:inset 0 -3px 0 #000!important}
+body .step.active{border-bottom-color:#000!important;font-weight:bold}
+body input{accent-color:#0057ff!important}
+body :is(a,button,input,select,textarea):focus-visible{outline:2px solid #0057ff!important;outline-offset:3px}
+body a{text-decoration:underline}
+body .sorting-orbit{border-color:#aaa!important}
+body .sort-folder{border-color:#000!important}
+body .sort-folder.sort-drop-active{outline:3px solid #0057ff!important}
+body svg text{fill:#000!important}
+body svg :is([stroke="#d7dce4"],[stroke="#cbd0d9"]){stroke:#ccc!important}
+body .priority-compass svg path[fill=black]{fill:#000!important}
+body svg :is(rect[fill=white],rect[fill="#ffffff"],rect[fill="#fff"]){fill:#fff!important}
+body dialog::backdrop{background:#0005}
+#themeToggle{display:none!important}
+
+/* Three consistent text sizes: title 24px, interface 14px, caption 12px. */
+body{font-size:14px!important;line-height:1.5}
+body :is(button,input,select,textarea,p,label,legend,summary,li,output,h3,h4,h5,h6,.step,.photo-item,.option,.sorting-toolbar,.folder-title,.sort-center,.bulk-actions,.bulk-controls,.polygon-controls,.polygon-toolbar,.review-row){font-size:14px!important;line-height:1.5!important}
+body :is(h1,h2,.intro h1,.save-dialog h2){font-size:24px!important;line-height:1.25!important;font-weight:bold!important;letter-spacing:0!important}
+body :is(small,figcaption,.hint,.muted,.eyebrow,.header-caption,.save-state,.photo-caption,.app-footer,.folder-count,.sort-save-note,.gallery-preview-header,.gallery-preview-footer,.revision-label,.section-number,.priority-radar details,.priority-radar-settings summary span,.priority-street-section figcaption,.priority-street-section figcaption span,.bulk-photo small,.filtered-photo-result small){font-size:12px!important;line-height:1.5!important;letter-spacing:0!important}
+body :is(.hint,.muted,.photo-caption,.app-footer,.header-caption) :is(span,a,small){font-size:inherit!important}
+body svg text{font-size:12px!important}
+
+/* Map locations remain circular data markers, independent of square controls. */
+body button.overview-marker{border-radius:50%!important;background:var(--marker-background,#000)!important;color:var(--marker-ink,#fff)!important;border:2px solid #fff!important;box-shadow:0 1px 4px #0005!important;font-size:12px!important;line-height:1!important;display:flex;align-items:center;justify-content:center}
+body button.overview-marker:hover,body button.overview-marker:focus-visible{outline:2px solid #000;outline-offset:2px}
+
+/* Main destinations remain visible in one row at the top. */
+.top-navigation{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}.top-navigation button{white-space:nowrap}.top-navigation button[aria-pressed=true]{border-color:#000!important;box-shadow:inset 0 -3px 0 #000!important;font-weight:bold}body>header{position:sticky;top:0;z-index:1000;border-bottom:1px solid #ccc}body #insights,body #returnEntry{display:none!important}@media(max-width:650px){body>header{flex-wrap:wrap;gap:12px}.toolbar{flex-wrap:wrap}.top-navigation{width:100%}}
+
+/* Center the primary navigation independently of the logo and save status. */
+body>header{position:sticky;display:grid!important;grid-template-columns:1fr auto 1fr;align-items:center;min-height:76px}
+body>header>.logo{grid-column:1;grid-row:1;justify-self:start}
+body>header>.toolbar{display:contents!important}
+body>header .top-navigation{grid-column:2;grid-row:1;justify-self:center;width:auto;display:flex;gap:8px}
+body>header :is(#revisionLabel,#saveState){grid-column:3;grid-row:1;justify-self:end}
+body>header #revisionLabel{display:none}
+body>header .top-navigation button,body>header .top-navigation button.primary{background:#000!important;color:#fff!important;border:1px solid #000!important;box-shadow:none!important;padding:10px 18px}
+body>header .top-navigation button[aria-pressed=true]{text-decoration:underline;text-underline-offset:4px}
+body>header .top-navigation button:hover{outline:2px solid #000;outline-offset:2px}
+@media(max-width:700px){body>header{grid-template-columns:1fr!important;gap:10px;padding:12px!important}body>header>.logo{grid-column:1;grid-row:1;justify-self:center}body>header .top-navigation{grid-column:1;grid-row:2;justify-self:center}body>header #saveState{display:none}}
+
+/* Softer modules, generous spacing, and consistent control shapes. */
+:root{--module-radius:16px;--control-radius:8px}
+body{line-height:1.6!important}
+body>header{padding-top:16px;padding-bottom:16px;border-bottom-color:#e5e5e5}
+body :is(.insight-card,.facade-gallery-card,.comparison-graph,.analysis-filter-panel,.analysis-map-panel,.analysis-gallery-panel,.priority-radar-settings,.priority-editor,.bulk-tags,.sort-preview,.sort-finished,.form-panel,.canvas-node){border:1px solid #dedede!important;border-radius:var(--module-radius)!important;box-shadow:0 3px 14px #00000006!important}
+body :is(.insight-card,.comparison-graph,.priority-radar-settings,.priority-editor,.bulk-tags,.sort-preview,.sort-finished,.form-panel){padding:22px!important}
+body :is(button,input:not([type=checkbox]):not([type=radio]),select,textarea,.option){border-radius:var(--control-radius)!important}
+body :is(button,input:not([type=checkbox]):not([type=radio]),select,textarea){min-height:40px;padding:9px 12px;border-color:#d0d0d0!important}
+body :is(input[type=checkbox],input[type=radio]){min-height:0;padding:0;flex-shrink:0}
+body textarea{line-height:1.6!important}
+body :is(button:hover,.option:hover,.photo-item:hover,.facade-gallery-card:hover){outline:none;border-color:#777!important;box-shadow:0 2px 8px #0000000a!important}
+body :is(button.primary,.analysis-view-switch button[aria-pressed=true],.type-tabs .active,.option:has(input:checked),.photo-item.active,.bulk-photo:has(input:checked)){box-shadow:inset 0 0 0 1px #000!important}
+body :is(button,input,select,textarea,.option,.facade-gallery-card){transition:border-color .15s ease,box-shadow .15s ease}
+body .option{padding:12px 14px;display:flex;align-items:center;gap:8px}
+body :is(.photo-item,.bulk-photo,.filtered-photo-result,.sort-preview-item){border-radius:10px!important;overflow:hidden}
+body :is(.facade-gallery-card,.canvas-node){overflow:hidden}
+body .facade-gallery{gap:20px}
+body .gallery-card-info{padding:16px;line-height:1.6}
+body .field{margin:26px 0}
+body :is(.field legend,.field>label){margin-bottom:10px;font-weight:bold}
+body :is(.options,.bulk-controls,.polygon-controls,.filter-actions,.bulk-actions){gap:12px}
+body :is(.filtered-analysis-layout,.priority-profile-visuals){gap:24px}
+body .analysis-filter-row{padding:18px 0;border-bottom-color:#e5e5e5}
+body .analysis-view-switch{padding:6px;border:1px solid #dedede;border-radius:12px!important;gap:6px}
+body :is(dialog,.save-dialog){border:1px solid #ddd!important;border-radius:20px!important;box-shadow:0 16px 60px #0002!important}
+body .gallery-preview-footer{padding-top:18px;gap:12px}
+body .canvas-node-bar{padding:12px;gap:12px;border-bottom-color:#dedede}
+body .canvas-viewport{border-radius:16px;border-color:#dedede}
+body>header .top-navigation{padding:5px;border:1px solid #e2e2e2;border-radius:14px!important}
+body>header .top-navigation button{border-radius:9px!important;padding:10px 20px}
+body button.overview-marker{border-radius:50%!important;padding:0!important;min-height:18px;min-width:18px}
+body button.overview-marker:not(:empty){min-height:26px;min-width:26px}
+body .analysis-filter-row>button{min-height:32px;padding:3px}
+@media(prefers-reduced-motion:reduce){body :is(button,input,select,textarea,.option,.facade-gallery-card){transition:none}}
+@media(max-width:650px){body :is(.insight-card,.comparison-graph,.priority-radar-settings,.priority-editor,.bulk-tags,.sort-preview,.sort-finished,.form-panel){padding:16px!important}body .facade-gallery{gap:14px}}
+
+body.profile-gallery-view :is(.analysis-view-switch,.comparison-toolbar,#relationshipGraphs,#analysisMapSection){display:none!important}
+body.profile-gallery-view .analysis-map-panel{position:static}
+@media(max-width:500px){body>header .top-navigation{gap:4px;padding:4px}body>header .top-navigation button{padding:9px 10px!important;font-size:12px!important}}
+
+/* Map points must not inherit the minimum size of interface buttons. */
+body button.overview-marker{box-sizing:border-box!important;width:18px!important;height:18px!important;min-width:18px!important;min-height:18px!important;max-width:18px!important;max-height:18px!important;aspect-ratio:1!important;border-radius:50%!important;padding:0!important;line-height:1!important;flex:none!important}
+body button.overview-marker:not(:empty){width:26px!important;height:26px!important;min-width:26px!important;min-height:26px!important;max-width:26px!important;max-height:26px!important}
+
+html body button.overview-marker.overview-marker{border-radius:50%!important}

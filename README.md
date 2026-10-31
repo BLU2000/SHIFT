@@ -1,5 +1,9 @@
 # Facade ID
 
+**Local SegFormer WWR pilot:** see [wwr-segformer/README.md](wwr-segformer/README.md). The supplied research checkpoint is installed locally and a 20-photo pilot is available in `wwr-segformer/results/pilot/review.html`. HTML 17 supports **Import SegFormer WWR** for separate estimated ratios, mask previews and verification status; manual survey tags are preserved.
+
+**HTML 17 map bulk tagging:** open Analysis and choose Map or Both. Above the map, choose **Select polygon**, click its corners, then **Finish selection**. Points inside or on the boundary are selected, including every photo at a shared location. The selection applies only to photos matching the current analysis filters; photos without coordinates are excluded. Choose a whole-facade/context attribute or an existing sorted category, choose its value, inspect the change count/preview and Apply. Fill unanswered only is the default; replacement and adding to multi-selection answers are explicit modes. Changes autosave and reopen affected profiles. **Undo last change** restores the edited attribute while protecting later edits. Polygon selections are temporary; applied tags are included in normal HTML/JSON saves.
+
 Open **Facade-ID.html** in a modern browser. It contains the entire English application and all 204 photographs from `images/images all/New Photos`, replacing the previous collection. No server, account, internet connection, or photo import is required. Original photos are preserved; embedded JPEG copies are resized to a maximum of 1600 pixels for portability, respecting EXIF orientation. A new collection ID separates this batch from previous browser answers; `Facade-ID-previous-batch.html` retains access to the previous collection and its browser state.
 
 Urban context includes multiple-selection **Ground-floor use**: Gastronomy, Retail, Groceries, Residential, Office / services, Community / public use, Parking, Vacant, Other, or Unknown.

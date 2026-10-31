@@ -1,0 +1,78 @@
+.canvas-toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px}.canvas-toolbar span{font-size:12px}.canvas-viewport{height:80vh;overflow:auto;border:1px solid #000;background:#fff}#analysisCanvasBoard{position:relative;width:0;height:0;background-image:radial-gradient(#ddd 1px,transparent 1px);background-size:20px 20px}.canvas-node{position:absolute;min-width:650px;min-height:400px;resize:both;overflow:hidden;border:1px solid #000;display:flex;flex-direction:column;background:white}.canvas-node:focus-within{z-index:2}.canvas-node-bar{display:flex;gap:12px;align-items:center;padding:8px;border-bottom:1px solid #000;cursor:move;touch-action:none}.canvas-node-bar input{flex:1;min-width:0;font-weight:bold}.canvas-node iframe{width:100%;flex:1;border:0;min-height:0}
+
+body:has(#analysisCanvasBoard) #main{max-width:none!important;width:100%;padding:20px!important}
+body:has(#analysisCanvasBoard) .canvas-viewport{height:calc(100vh - 195px);min-height:480px}
+.canvas-toolbar{position:sticky;left:0;background:#fff;padding:10px 0;z-index:3}.canvas-toolbar h1{margin:0 12px 0 0}
+#analysisCanvasBoard:empty::before{content:'Add a map, analysis or gallery module to start your canvas.';position:absolute;top:48px;left:32px;font:14px Courier,monospace;color:#000}
+
+/* Strong module boundaries against the white canvas. */
+body .canvas-node{border:2px solid #333!important;box-shadow:0 4px 16px #00000014!important}
+body .canvas-node-bar{border-bottom:2px solid #333!important}
+body .canvas-node:focus-within{border-color:#000!important;box-shadow:0 5px 20px #00000022!important}
+
+#canvasConnections{position:absolute;inset:0;pointer-events:none;overflow:visible;z-index:5}
+body .canvas-node{overflow:hidden;min-width:400px}
+.canvas-node-ports{display:flex;justify-content:space-between;align-items:center;padding:6px 14px;border-bottom:1px solid #ddd;gap:12px;min-height:48px}
+body .canvas-port{min-height:30px;padding:3px 8px;font-size:12px!important;border-color:#333!important}
+body .canvas-port.connecting{background:#0057ff!important;color:white!important}
+.canvas-node-count{font-size:12px!important}
+
+body .canvas-node-ports{padding:10px 12px;min-height:54px;background:#fff}
+body button.canvas-port{display:flex;align-items:center;gap:9px;border:0!important;box-shadow:none!important;font-weight:bold;min-height:32px;padding:4px 6px!important}
+.canvas-input::before,.canvas-output::after{content:'';display:block;width:18px;height:18px;flex-shrink:0;border:3px solid #0057ff;border-radius:50%;background:white}
+.canvas-output::after{background:#0057ff}
+.canvas-port.connecting::after{background:#fff;border-color:#fff}
+body .canvas-port:hover::before,body .canvas-port:hover::after{box-shadow:0 0 0 4px #0057ff22}
+
+/* Component canvas: external sockets, wires, draggable headers, and a zoomable board. */
+body:has(#analysisCanvasBoard) .shell{display:block!important;grid-template-columns:1fr!important}
+body:has(#analysisCanvasBoard) .shell>aside{display:none!important}
+#analysisCanvasBoard{transform-origin:0 0;isolation:isolate}
+#canvasConnections{z-index:0}
+body .canvas-node{z-index:1;overflow:visible!important;resize:none;min-height:300px}
+body .canvas-node:focus-within{z-index:2}
+body .canvas-node-bar{border-radius:14px 14px 0 0;background:#f3f3f3!important;min-height:54px;user-select:none}
+.canvas-node-title{flex:1;min-width:0;font-size:14px;font-weight:bold;cursor:grab;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.canvas-node-title[contenteditable=true]{cursor:text;user-select:text;outline:1px solid #0057ff}
+body .canvas-node-ports{position:relative;justify-content:center;height:40px;min-height:40px;padding:4px 22px}
+body button.canvas-port{position:absolute!important;top:5px;width:30px!important;height:30px!important;min-width:30px!important;min-height:30px!important;padding:0!important;border:3px solid #111!important;border-radius:50%!important;background:#fff!important;box-shadow:0 0 0 4px #fff!important;z-index:4;cursor:crosshair}
+body button.canvas-input{left:-17px}
+body button.canvas-output{right:-17px;background:#111!important}
+.canvas-input::before,.canvas-output::after{display:none!important}
+body button.canvas-port.connecting,body button.canvas-port:hover{border-color:#0057ff!important;box-shadow:0 0 0 5px #0057ff33!important}
+body button.canvas-output.connecting{background:#0057ff!important}
+.canvas-node-count::before{content:'Images  ';font-weight:bold}
+body .canvas-node iframe{border-radius:0 0 14px 14px;background:white}
+body button.canvas-resize-grip{position:absolute;bottom:0;right:0;width:20px;min-height:20px;height:20px;padding:0;border:0!important;border-radius:0 0 12px 0!important;background:linear-gradient(135deg,transparent 45%,#777 46%,#777 54%,transparent 55%,transparent 65%,#777 66%,#777 74%,transparent 75%)!important;cursor:nwse-resize;z-index:3}
+.canvas-viewport{cursor:grab;touch-action:none;overscroll-behavior:contain}
+.canvas-viewport.panning{cursor:grabbing}.canvas-viewport .canvas-node{cursor:default}
+.canvas-node-error{border-color:#d71920!important}
+
+.canvas-node[data-kind=data] .canvas-input{display:none!important}
+.canvas-data-list>details{border-bottom:1px solid #ddd;padding:8px 0}
+.canvas-data-list summary{display:flex;align-items:center;gap:12px;cursor:pointer;overflow-wrap:anywhere}
+.canvas-data-list summary img{width:40px;height:50px;object-fit:cover;border-radius:6px}
+.canvas-tool-data dl{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:12px}
+.canvas-tool-data dt{font-weight:bold}.canvas-tool-data dd{margin:0;overflow-wrap:anywhere}
+
+/* Unbounded world coordinates: pan the camera instead of scrolling a fixed board. */
+body .canvas-viewport{position:relative;overflow:hidden!important;background-image:radial-gradient(#ccc 1px,transparent 1px);background-size:24px 24px;isolation:isolate}
+#analysisCanvasBoard{position:absolute;left:0;top:0;width:0!important;height:0!important;overflow:visible;transform-origin:0 0;background:none!important}
+#canvasConnections{width:1px;height:1px;overflow:visible!important}
+
+/* Visible foreground wires connect sockets at each module's vertical midpoint. */
+#canvasConnections{z-index:20!important;pointer-events:none!important}
+#canvasConnections path{pointer-events:stroke;filter:drop-shadow(0 1px 1px #fff)}
+body .canvas-node>button.canvas-port{top:50%!important;transform:translateY(-50%);z-index:25}
+
+#canvasConnections{width:1px!important;min-width:1px!important;max-width:none!important;height:1px!important;max-height:none!important}
+#canvasConnections path{filter:none!important}
+
+/* Named module groups sit behind components and follow their bounds. */
+.canvas-group-bubble{position:absolute;z-index:0;background:rgba(105,181,255,.16);border:2px solid #8abcea;border-radius:32px;pointer-events:none;box-sizing:border-box}
+.canvas-group-header{position:absolute;top:10px;left:24px;right:24px;display:flex;align-items:center;gap:12px;pointer-events:auto;cursor:grab;touch-action:none}
+.canvas-group-title{flex:1;font-weight:bold;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;user-select:none}
+.canvas-group-title[contenteditable=true]{user-select:text;cursor:text;outline:1px solid #0057ff}
+body .canvas-group-header button{font-size:12px!important;min-height:28px;padding:3px 8px;background:#fff!important}
+body .canvas-node.canvas-module-selected{border-color:#0057ff!important;box-shadow:0 0 0 4px #0057ff33!important}
+body .canvas-node-bar input.canvas-group-select{flex:none;width:16px!important;height:16px!important;min-width:16px!important;min-height:16px!important;margin:0;cursor:pointer}

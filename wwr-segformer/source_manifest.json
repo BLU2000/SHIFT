@@ -1,0 +1,16 @@
+{
+  "repository": "zoedesimone/wwr-semantic-segmentation",
+  "commit": "fba3dff1984c6f6eec3ffd685a2a85156b676e5c",
+  "checkpoint_drive_id": "1eVqbUzLsAbhkppAvV9KcQb_5sPQpRjMu",
+  "config_repository": "nvidia/segformer-b0-finetuned-ade-512-512",
+  "config_revision": "489d5cd81a0b59fab9b7ea758d3548ebe99677da",
+  "sha256": {
+    "README.md": "85c20ff25ff7168e20b1d0781b1429e1d61ab5292444197f7b80ef3c4436376e",
+    "LICENSE": "07905c84d1e5bbbbe798625e7c9fde4481b47ef704e5a4bcb1b79b98d0118fc2",
+    "SegFormer_Training.ipynb": "f6b96202186f8473f113f5dc8dc9153140c50bdb6da01fc1da3ba7c52cdf44c9",
+    "SegformerDatasetGeneration_Visualization.ipynb": "4067c7e4f983cae55e6d586cb0c8dcf63044acf774e3cdd30ae094daa8e0c2fa",
+    "best_model.pt": "39e7a8ac41f257bb795e51ea111d9ab1ce9c1569f02f0a8871919f6292968480",
+    "config.json": "209caa9091e4632f7c8883c11170cd08ad29af68b23c09590aa4a5befb1a2a7f",
+    "preprocessor_config.json": "8039d1d210abaa7117ad78e58cdfd6141a2ec72c03dae891b3cd76737e422c6c"
+  }
+}

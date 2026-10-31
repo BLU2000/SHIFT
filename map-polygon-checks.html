@@ -1,0 +1,29 @@
+<!doctype html><meta charset="utf-8"><title>Polygon selection checks</title><pre id="results">RUNNING</pre><iframe id="app" src="Facade-ID_BU_v017.html" style="width:1400px;height:1100px"></iframe><script>
+window.addEventListener('load',async()=>{try{const w=document.getElementById('app').contentWindow;const checks=await w.eval(`(async()=>{
+for(let i=0;i<100&&!document.querySelector('#next');i++)await new Promise(r=>setTimeout(r,100));
+const checks=[],ok=(value,label)=>{if(!value)throw Error(label);checks.push(label);};
+ok(polygonContains([0,0],[[-1,-1],[1,-1],[1,1],[-1,1]]),'Point inside polygon included');
+ok(polygonContains([1,0],[[-1,-1],[1,-1],[1,1],[-1,1]]),'Points on polygon boundary included');
+ok(!polygonContains([2,0],[[-1,-1],[1,-1],[1,1],[-1,1]]),'Point outside polygon excluded');
+ok(!polygonValid([[0,0],[1,1],[0,1],[1,0]]),'Crossing polygon rejected');
+ok(!polygonValid([[0,0],[1,0],[2,0]]),'Degenerate polygon rejected');
+const ids=photos.slice(0,3).map(p=>p.id),before=ids.map(id=>structuredClone(records[id])),savedPersist=persist,savedFilters=structuredClone(analysisFilters),savedLive=window.DISABLE_LIVE_OVERVIEW_FOR_TESTS;persist=()=>Promise.resolve();window.DISABLE_LIVE_OVERVIEW_FOR_TESTS=true;
+try{
+ analysisFilters.rules=[];analysisFilters.search='';analysisFilters.mode='both';view='insights';render();disposeOverviewMap();
+ const points=photos.slice(0,3);points.forEach((p,i)=>{records[p.id].location={lat:i===2?2:0,lng:i===2?2:0};});records[ids[0]].context.orientation='North';delete records[ids[1]].context.orientation;records[ids[0]].completed=true;
+ overviewPoints=points;const host=document.getElementById('mapPlot');host.innerHTML='<div id="geographicMap" style="width:500px;height:300px"></div>';overviewMap={project:([lng,lat])=>({x:100+lng*50,y:100-lat*50}),unproject:([x,y])=>({lng:(x-100)/50,lat:(100-y)/50}),on(){return this;},remove(){}};attachPolygonTool();
+ document.getElementById('polygonStart').click();const svg=document.getElementById('mapPolygonOverlay'),bounds=svg.getBoundingClientRect();for(const [x,y]of [[75,125],[125,125],[125,75],[75,75]])svg.dispatchEvent(new MouseEvent('click',{clientX:bounds.left+x,clientY:bounds.top+y,bubbles:true}));
+ ok(polygonVertices.length===4,'Map clicks draw polygon corners');document.getElementById('polygonFinish').click();ok(polygonSelected.has(ids[0])&&polygonSelected.has(ids[1])&&!polygonSelected.has(ids[2]),'Polygon selects all coincident facades and excludes outside points');
+ const field=document.getElementById('polygonField');field.value='context.orientation';field.dispatchEvent(new Event('change',{bubbles:true}));const value=document.getElementById('polygonValue');value.value='South';value.dispatchEvent(new Event('change',{bubbles:true}));
+ ok(polygonPlan().length===1,'Default fill mode protects existing answers');ok(document.getElementById('polygonApply').textContent.includes('1'),'Apply button previews change count');
+ await polygonApplyChanges();ok(records[ids[0]].context.orientation==='North'&&records[ids[1]].context.orientation==='South','Apply updates only selected eligible facade');ok(records[ids[2]].context.orientation===before[2].context.orientation,'Outside facade is unchanged');
+ await polygonUndoChanges();ok(records[ids[1]].context.orientation===undefined,'Undo restores missing answer');
+ polygonMode='replace';polygonPanel();await polygonApplyChanges();ok(records[ids[0]].context.orientation==='South'&&!records[ids[0]].completed,'Replace mode updates selected facades and reopens them');
+ records[ids[0]].context.orientation='East';records[ids[0]].notes='Later unrelated note';records[ids[0]].updatedAt='2099-01-01T00:00:00Z';await polygonUndoChanges();ok(records[ids[0]].context.orientation==='East'&&records[ids[0]].notes==='Later unrelated note','Undo preserves later edits');
+ overviewPoints=points;polygonField='context.ground';polygonValue='Canopy (Vordach)';polygonMode='add';records[ids[0]].context.ground=['At ground level'];ok(polygonPlan().find(p=>p.photo.id===ids[0]).value.includes('At ground level'),'Multi-select addition preserves existing selections');
+ overviewPoints=[points[0]];ok(polygonPlan().every(p=>p.photo.id===ids[0]),'Hidden filtered-out facades cannot be changed');
+ document.getElementById('polygonClear').click();ok(!polygonSelected.size&&!polygonVertices.length,'Clear selection resets polygon and selected facades');
+}finally{ids.forEach((id,i)=>records[id]=before[i]);persist=savedPersist;analysisFilters=savedFilters;window.DISABLE_LIVE_OVERVIEW_FOR_TESTS=savedLive;polygonVertices=[];polygonSelected.clear();polygonUndo=null;polygonFinished=false;polygonDrawing=false;view='entry';render();}
+return checks;
+})()`);document.getElementById('results').textContent='PASS: '+checks.length+' checks\n'+checks.join('\n');}catch(error){document.getElementById('results').textContent='FAIL: '+error.stack;}});
+</script>
