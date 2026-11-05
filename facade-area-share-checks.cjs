@@ -1,0 +1,12 @@
+const assert=require('node:assert/strict');
+const {composition,summarize}=require('./facade-area-share.js');
+const record=(a,b)=>({types:[{kind:'Punched-window façade',share:a},{kind:'Loggia',share:b}]});
+const data=summarize([{group:'North',record:record('.8','.2')},{group:'North',record:record('.4','.6')},{group:'East',record:{types:[{kind:'Balcony'}]}},{group:'North',record:record(undefined,'.5')}],item=>item.group);
+const north=data.buckets.find(b=>b.label==='North');assert.equal(north.items.length,2);assert.equal(north.excluded,1);
+assert(Math.abs(north.items.reduce((s,item)=>s+item.shares.Loggia,0)/north.items.length-.4)<1e-12);
+assert.equal(data.excluded,1);assert.equal(data.buckets.find(b=>b.label==='East').items[0].shares.Balcony,1);
+assert.deepEqual(composition(record('.2','.3')).shares,{'Punched-window façade':.4,Loggia:.6});
+assert.equal(composition({types:[{kind:'Unknown',share:'1'}]}),null);
+assert.deepEqual(composition({types:[{kind:'Loggia',share:'.5'},{kind:'Loggia',share:'.5'}]}).shares,{Loggia:1});
+assert.deepEqual(composition({types:[{kind:'Loggia',share:'1'},{kind:'Unknown',share:'0'}]}).shares,{Loggia:1});
+console.log('Area-share checks passed: whole-facade weighting, repeated types, missing shares, zero shares, rescaling, and equal per-facade group averages.');

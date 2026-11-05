@@ -47,6 +47,17 @@ foreach ($asset in @(
     @{ Marker = '<script data-map-library src="vendor/maplibre-gl.js"></script>'; Path = 'vendor/maplibre-gl.js'; Tag = 'script' },
     @{ Marker = '<script data-map-picker src="map-picker.js"></script>'; Path = 'map-picker.js'; Tag = 'script' }
     @{ Marker = '<script data-save-dialog src="save-dialog.js"></script>'; Path = 'save-dialog.js'; Tag = 'script' }
+    @{ Marker = '<link data-facade-clustering-style rel="stylesheet" href="facade-clustering.css">'; Path = 'facade-clustering.css'; Tag = 'style' }
+    @{ Marker = '<script data-facade-clustering-core src="facade-clustering-core.js"></script>'; Path = 'facade-clustering-core.js'; Tag = 'script' }
+    @{ Marker = '<script data-facade-threshold src="facade-threshold.js"></script>'; Path = 'facade-threshold.js'; Tag = 'script' }
+    @{ Marker = '<script data-facade-combinations src="facade-combinations.js"></script>'; Path = 'facade-combinations.js'; Tag = 'script' }
+    @{ Marker = '<script data-category-coverage src="category-coverage.js"></script>'; Path = 'category-coverage.js'; Tag = 'script' }
+    @{ Marker = '<script data-facade-area-share src="facade-area-share.js"></script>'; Path = 'facade-area-share.js'; Tag = 'script' }
+    @{ Marker = '<script data-facade-combination-land src="facade-combination-land.js"></script>'; Path = 'facade-combination-land.js'; Tag = 'script' }
+    @{ Marker = '<script data-combination-leaflet src="vendor/leaflet/leaflet.js"></script>'; Path = 'vendor/leaflet/leaflet.js'; Tag = 'script' }
+    @{ Marker = '<script data-combination-map-adapter src="vendor/leaflet/leaflet-maplibre-gl.js"></script>'; Path = 'vendor/leaflet/leaflet-maplibre-gl.js'; Tag = 'script' }
+    @{ Marker = '<link data-combination-leaflet-style rel="stylesheet" href="vendor/leaflet/leaflet.css">'; Path = 'vendor/leaflet/leaflet.css'; Tag = 'style' }
+    @{ Marker = '<script data-facade-clustering src="facade-clustering.js"></script>'; Path = 'facade-clustering.js'; Tag = 'script' }
     @{ Marker = '<script data-photo-upload src="photo-upload.js"></script>'; Path = 'photo-upload.js'; Tag = 'script' }
     @{ Marker = '<script data-building-types src="building-types.js"></script>'; Path = 'building-types.js'; Tag = 'script' }
     @{ Marker = '<script data-sorting-canvas src="sorting-canvas.js"></script>'; Path = 'sorting-canvas.js'; Tag = 'script' }
